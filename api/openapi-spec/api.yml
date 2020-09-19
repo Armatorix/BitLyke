@@ -1,0 +1,60 @@
+openapi: 3.0.3
+# for online validation or view use https://editor.swagger.io/
+
+info:
+  title: WeightApp API
+  description: Our dummy API for WeightAPP
+  version: 0.1.0
+paths:
+  /short:
+    get:
+      description: Returns all shortened links
+      responses:
+        200:
+          description: Proper list of shoretened links
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/ShortenLinks"
+        500:
+          description: Internal server error
+    post:
+      description: Creates new link shortener
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/ShortenLink"
+      responses:
+        201:
+          description: Properly created link shortener
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/ShortenLink"
+        400:
+          description: Provided bad request or missing data
+        500:
+          description: Internal server error
+  /short/:lid:
+    get:
+      responses:
+        301:
+          description: Redirects to shortened link
+        404:
+          description: Not found record
+
+components:
+  schemas:
+    ShortenLinks:
+      type: array
+      items:
+        $ref: "#/components/schemas/ShortenLink"
+    ShortenLink:
+      type: object
+      properties:
+        shorten_path:
+          type: string
+        real_url:
+          type: string
