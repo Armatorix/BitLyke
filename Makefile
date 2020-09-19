@@ -10,7 +10,8 @@ model-generate:
   		-v ${PWD}:/local openapitools/openapi-generator-cli generate \
 		  -i /local/${OPENAPI_PATH} \
 		  -g go \
-		  -o /local/${GENERATE_PATH}
+		  -o /local/${GENERATE_PATH} \
+		  --package-name model
 	sudo chown -R ${USER}:${USER} ./${GENERATE_PATH}
 
 .PHONY: model-remove
