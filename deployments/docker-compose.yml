@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  postgres:
+    image: postgres:12.2
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: weight_app
+    network_mode: host
+    volumes:
+      - ../database/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build:
+      dockerfile: ./deployments/Dockerfile.api
+      context: ../
+    env_file: ../configs/env.local.api
+    ports:
+      - "8081:8081"
+    network_mode: host
+    depends_on:
+      - postgres

@@ -1,9 +1,11 @@
 openapi: 3.0.3
 # for online validation or view use https://editor.swagger.io/
+servers:
+  - url: "http://localhost:8081"
 
 info:
-  title: WeightApp API
-  description: Our dummy API for WeightAPP
+  title: Bitlyke
+  description: BITLY liKE API
   version: 0.1.0
 paths:
   /short:

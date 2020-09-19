@@ -38,7 +38,7 @@ func New() *Config {
 
 func FromEnv() (*Config, error) {
 	cfg := &Config{}
-	if err := env.Parse(&cfg); err != nil {
+	if err := env.Parse(cfg); err != nil {
 		return nil, fmt.Errorf("env parsing: %w", err)
 	}
 	return cfg, nil
