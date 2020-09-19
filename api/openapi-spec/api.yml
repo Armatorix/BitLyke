@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schema/ShortenLinks"
+                $ref: "#/components/schemas/ShortenLinks"
         500:
           description: Internal server error
     post:
@@ -25,14 +25,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schema/ShortenLink"
+              $ref: "#/components/schemas/ShortenLink"
       responses:
         201:
           description: Properly created link shortener
           content:
             application/json:
               schema:
-                $ref: "#/components/schema/ShortenLink"
+                $ref: "#/components/schemas/ShortenLink"
         400:
           description: Provided bad request or missing data
         500:
