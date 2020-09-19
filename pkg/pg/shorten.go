@@ -14,7 +14,14 @@ var (
 )
 
 func (db *DB) InsertLinkShorten(l *model.ShortenLink) (*model.ShortenLink, error) {
-	err := db.Insert(l)
+	_, err := db.GetDestinationLink(l.ShortenPath)
+	if err == nil {
+		return nil, ErrAlreadyInUse
+	}
+	if err != nil && !errors.Is(err, ErrNotFound) {
+		return nil, fmt.Errorf("unexpected error: %w", err)
+	}
+	err = db.Insert(l)
 	if err != nil {
 		return nil, err
 	}
