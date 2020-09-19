@@ -8,8 +8,9 @@
  */
 
 package model
+
 // ShortenLink struct for ShortenLink
 type ShortenLink struct {
 	ShortenPath string `json:"shorten_path,omitempty"`
-	RealUrl string `json:"real_url,omitempty"`
+	RealUrl     string `json:"real_url,omitempty"`
 }

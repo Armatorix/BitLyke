@@ -10,7 +10,7 @@ run:
 			--build
 
 .PHONY: model-rebuild
-model-rebuild: model-remove model-generate model-clean
+model-rebuild: model-remove model-generate model-clean formatter
 
 .PHONY: model-generate
 model-generate:
@@ -44,3 +44,19 @@ model-clean:
 		README.md \
 		.travis.yml \
 		.openapi-generator-ignore
+
+.PHONY: prettier
+prettier:
+	docker run --rm \
+			-v "$(pwd):" \
+		tmknom/prettier \
+			--parser=go \
+			--write '**/*.go'
+
+.PHONY: linter
+linter:
+	golangci-lint run
+
+.PHONY: formatter
+formatter:
+	find . -type f -name "*.go" | xargs goimports -w
