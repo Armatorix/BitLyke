@@ -26,18 +26,18 @@ type DefaultApiService service
 
 /*
 ShortGet Method for ShortGet
-Returns all shortened links
+Returns all short links
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-@return []ShortenLink
+@return []ShortLink
 */
-func (a *DefaultApiService) ShortGet(ctx _context.Context) ([]ShortenLink, *_nethttp.Response, error) {
+func (a *DefaultApiService) ShortGet(ctx _context.Context) ([]ShortLink, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  []ShortenLink
+		localVarReturnValue  []ShortLink
 	)
 
 	// create path and map variables
@@ -227,19 +227,19 @@ func (a *DefaultApiService) ShortLidGet(ctx _context.Context) (*_nethttp.Respons
 
 /*
 ShortPost Method for ShortPost
-Creates new link shortener
+Creates new short link
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param shortenLink
-@return ShortenLink
+ * @param shortLink
+@return ShortLink
 */
-func (a *DefaultApiService) ShortPost(ctx _context.Context, shortenLink ShortenLink) (ShortenLink, *_nethttp.Response, error) {
+func (a *DefaultApiService) ShortPost(ctx _context.Context, shortLink ShortLink) (ShortLink, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  ShortenLink
+		localVarReturnValue  ShortLink
 	)
 
 	// create path and map variables
@@ -266,7 +266,7 @@ func (a *DefaultApiService) ShortPost(ctx _context.Context, shortenLink ShortenL
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = &shortenLink
+	localVarPostBody = &shortLink
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

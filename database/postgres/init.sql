@@ -1,5 +1,5 @@
-CREATE TABLE shorten_links
+CREATE TABLE short_links
 (
-    shorten_path VARCHAR NOT NULL UNIQUE,
+    short_path VARCHAR NOT NULL UNIQUE,
     real_url VARCHAR NOT NULL
 );

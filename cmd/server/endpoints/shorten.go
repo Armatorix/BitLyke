@@ -9,24 +9,24 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (h *Handler) GetAllShorten(c echo.Context) error {
-	ls, err := h.db.GetLinkShortens()
+func (h *Handler) GetAllShorts(c echo.Context) error {
+	ls, err := h.db.GetLinkShorts()
 	if err != nil {
 		return err
 	}
 	return c.JSON(http.StatusOK, ls)
 }
 
-type postShortenRequest struct {
-	model.ShortenLink
+type postShortRequest struct {
+	model.ShortLink
 }
 
-func (h *Handler) CreateShorten(c echo.Context) error {
-	var req postShortenRequest
+func (h *Handler) CreateShort(c echo.Context) error {
+	var req postShortRequest
 	if err := c.Bind(&req); err != nil {
 		return c.NoContent(http.StatusBadRequest)
 	}
-	ls, err := h.db.InsertLinkShorten(&req.ShortenLink)
+	ls, err := h.db.InsertShort(&req.ShortLink)
 	if err != nil {
 		if errors.Is(err, pg.ErrAlreadyInUse) {
 			return c.NoContent(http.StatusConflict)
@@ -40,7 +40,7 @@ type getShortedRequest struct {
 	Link string `params:"link" json:"-" validate:"required"`
 }
 
-func (h *Handler) GetShorten(c echo.Context) error {
+func (h *Handler) GetShort(c echo.Context) error {
 	var req getShortedRequest
 	err := c.Bind(&req)
 	if err != nil {
@@ -57,7 +57,23 @@ func (h *Handler) GetShorten(c echo.Context) error {
 	return c.Redirect(http.StatusTemporaryRedirect, l.RealUrl)
 }
 
-func (h *Handler) DeleteShorten(c echo.Context) error {
+type deleteShortedRequest struct {
+	Link string `params:"link" json:"-" validate:"required"`
+}
 
-	return nil
+func (h *Handler) DeleteShort(c echo.Context) error {
+	var req deleteShortedRequest
+	err := c.Bind(&req)
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	l, err := h.db.DeleteShort(req.Link)
+	if err != nil {
+		if errors.Is(err, pg.ErrNotFound) {
+			return c.NoContent(http.StatusNotFound)
+		}
+		return c.NoContent(http.StatusInternalServerError)
+	}
+	return c.JSON(http.StatusOK, l)
 }

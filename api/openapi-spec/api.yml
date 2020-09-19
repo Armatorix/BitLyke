@@ -10,42 +10,42 @@ info:
 paths:
   /short:
     get:
-      description: Returns all shortened links
+      description: Returns all short links
       responses:
         200:
-          description: Proper list of shoretened links
+          description: Proper list of short links
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ShortenLinks"
+                $ref: "#/components/schemas/ShortLinks"
         500:
           description: Internal server error
     post:
-      description: Creates new link shortener
+      description: Creates new short link
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ShortenLink"
+              $ref: "#/components/schemas/ShortLink"
       responses:
         201:
-          description: Properly created link shortener
+          description: Properly created short link
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ShortenLink"
+                $ref: "#/components/schemas/ShortLink"
         400:
           description: Provided bad request or missing data
         409:
-          description: Url shortener already in use
+          description: Short url already in use
         500:
           description: Internal server error
   /short/:lid:
     get:
       responses:
-        301:
-          description: Redirects to shortened link
+        307:
+          description: Redirects to real link
         404:
           description: Not found record
     delete:
@@ -59,14 +59,14 @@ paths:
 
 components:
   schemas:
-    ShortenLinks:
+    ShortLinks:
       type: array
       items:
-        $ref: "#/components/schemas/ShortenLink"
-    ShortenLink:
+        $ref: "#/components/schemas/ShortLink"
+    ShortLink:
       type: object
       properties:
-        shorten_path:
+        short_path:
           type: string
         real_url:
           type: string
