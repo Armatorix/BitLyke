@@ -26,8 +26,8 @@ func main() {
 	e := echo.New()
 
 	e.Use(middleware.Logger())
+	e.Logger.SetLevel(cfg.Server.LogLevel)
 	e.Use(middleware.CORS())
-
 	e.GET("/public/health-check", endpoints.Healthcheck)
 
 	shortens := e.Group("/short")

@@ -25,7 +25,7 @@ func (db *DB) GetDestinationLink(shorten string) (*model.ShortenLink, error) {
 	l := &model.ShortenLink{
 		ShortenPath: shorten,
 	}
-	err := db.Model(&l).Select()
+	err := db.Model(l).Where("shorten_path = ?", l.ShortenPath).Select()
 	if err != nil {
 		if errors.Is(err, pg.ErrNoRows) {
 			return nil, ErrNotFound

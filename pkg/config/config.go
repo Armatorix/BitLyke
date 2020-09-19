@@ -4,10 +4,12 @@ import (
 	"fmt"
 
 	"github.com/caarlos0/env/v6"
+	"github.com/labstack/gommon/log"
 )
 
 type ServerConfig struct {
-	Address string `env:"SERVER_ADDRESS"`
+	Address  string  `env:"SERVER_ADDRESS"`
+	LogLevel log.Lvl `env:"SERVER_LOG_LEVEL"`
 }
 
 type PostgresConfig struct {

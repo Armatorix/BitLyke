@@ -36,9 +36,26 @@ func (h *Handler) CreateShorten(c echo.Context) error {
 	return c.JSON(http.StatusOK, ls)
 }
 
-func (h *Handler) GetShorten(c echo.Context) error {
+type getShortedRequest struct {
+	Link string `params:"link" json:"-" validate:"required"`
+}
 
-	return nil
+func (h *Handler) GetShorten(c echo.Context) error {
+	var req getShortedRequest
+	err := c.Bind(&req)
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	l, err := h.db.GetDestinationLink(req.Link)
+	if err != nil {
+		c.Logger().Infof("wtf: %v", err)
+		if errors.Is(err, pg.ErrNotFound) {
+			return c.NoContent(http.StatusNotFound)
+		}
+		return c.NoContent(http.StatusInternalServerError)
+	}
+	return c.Redirect(http.StatusTemporaryRedirect, l.RealUrl)
 }
 
 func (h *Handler) DeleteShorten(c echo.Context) error {
