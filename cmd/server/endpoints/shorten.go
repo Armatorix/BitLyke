@@ -18,7 +18,8 @@ func (h *Handler) GetAllShorts(c echo.Context) error {
 }
 
 type postShortRequest struct {
-	model.ShortLink
+	ShortPath string `json:"short_path" validate:"required"`
+	RealUrl   string `json:"real_url" validate:"required,url"`
 }
 
 func (h *Handler) CreateShort(c echo.Context) error {
@@ -26,7 +27,13 @@ func (h *Handler) CreateShort(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return c.NoContent(http.StatusBadRequest)
 	}
-	ls, err := h.db.InsertShort(&req.ShortLink)
+	if err := c.Validate(req); err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+	ls, err := h.db.InsertShort(&model.ShortLink{
+		ShortPath: req.ShortPath,
+		RealUrl:   req.RealUrl,
+	})
 	if err != nil {
 		if errors.Is(err, pg.ErrAlreadyInUse) {
 			return c.NoContent(http.StatusConflict)

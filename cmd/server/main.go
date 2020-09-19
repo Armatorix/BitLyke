@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/Armatorix/BitLyke/cmd/server/endpoints"
+	"github.com/Armatorix/BitLyke/cmd/server/validator"
 	"github.com/Armatorix/BitLyke/pkg/config"
 	"github.com/Armatorix/BitLyke/pkg/pg"
 	"github.com/avast/retry-go"
@@ -23,10 +24,16 @@ func main() {
 		log.Fatalf("failed connection test: %v", err)
 	}
 
+	v, err := validator.New()
+	if err != nil {
+		log.Fatalf("failed validator creation: %v", err)
+	}
+
 	e := echo.New()
 
 	e.Use(middleware.Logger())
 	e.Logger.SetLevel(cfg.Server.LogLevel)
+	e.Validator = v
 	e.Use(middleware.CORS())
 	e.GET("/public/health-check", endpoints.Healthcheck)
 

@@ -59,4 +59,8 @@ linter:
 
 .PHONY: formatter
 formatter:
-	find . -type f -name "*.go" | xargs goimports -w
+	find . \
+		-type f \
+		-name \
+		"*.go" \
+		| xargs goimports -w
