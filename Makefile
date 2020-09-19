@@ -5,7 +5,7 @@ GENERATE_PATH=./pkg/model
 .PHONE: run
 run:
 	docker-compose \
-			-f deployments/docker-compose.yml \
+			-f deployments/docker/docker-compose.yml \
 		up \
 			--build
 

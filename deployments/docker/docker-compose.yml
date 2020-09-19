@@ -11,13 +11,13 @@ services:
       POSTGRES_DB: bitlyke
     network_mode: host
     volumes:
-      - ../database/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../../database/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   api:
     build:
-      dockerfile: ./deployments/Dockerfile.api
-      context: ../
-    env_file: ../configs/env.local.api
+      dockerfile: deployments/docker/Dockerfile.api
+      context: ../../
+    env_file: ../../configs/env.local.api
     ports:
       - "8081:8081"
     network_mode: host
