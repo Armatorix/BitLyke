@@ -49,7 +49,6 @@ func (h *Handler) GetShorten(c echo.Context) error {
 
 	l, err := h.db.GetDestinationLink(req.Link)
 	if err != nil {
-		c.Logger().Infof("wtf: %v", err)
 		if errors.Is(err, pg.ErrNotFound) {
 			return c.NoContent(http.StatusNotFound)
 		}
