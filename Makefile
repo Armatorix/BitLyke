@@ -29,4 +29,5 @@ model-clean:
 		go.mod \
 		go.sum \
 		README.md \
-		.travis.yml
+		.travis.yml \
+		.openapi-generator-ignore
