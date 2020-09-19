@@ -1,6 +1,7 @@
-package db
+package pg
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/Armatorix/BitLyke/pkg/config"
@@ -27,4 +28,17 @@ func New(cfg config.PostgresConfig) *DB {
 			Password: cfg.Password,
 			Database: cfg.Database,
 		})}
+}
+
+func (db *DB) TestRequest() error {
+	const testNum = 1
+	var num int
+	_, err := db.Query(pg.Scan(&num), "SELECT ?", testNum)
+	if err != nil {
+		return fmt.Errorf("connection check failed: %w", err)
+	}
+	if num != testNum {
+		return fmt.Errorf("connection check failed: should have %d, was %d", testNum, num)
+	}
+	return nil
 }

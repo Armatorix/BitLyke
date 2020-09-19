@@ -1,4 +1,4 @@
-package db
+package pg
 
 import (
 	"errors"
@@ -8,7 +8,10 @@ import (
 	"github.com/go-pg/pg/v9"
 )
 
-var ErrNotFound = errors.New("not found")
+var (
+	ErrNotFound     = errors.New("not found")
+	ErrAlreadyInUse = errors.New("already in use")
+)
 
 func (db *DB) InsertLinkShorten(l *model.ShortenLink) (*model.ShortenLink, error) {
 	err := db.Insert(l)

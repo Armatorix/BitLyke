@@ -35,6 +35,8 @@ paths:
                 $ref: "#/components/schemas/ShortenLink"
         400:
           description: Provided bad request or missing data
+        409:
+          description: Url shortener already in use
         500:
           description: Internal server error
   /short/:lid:
@@ -44,6 +46,14 @@ paths:
           description: Redirects to shortened link
         404:
           description: Not found record
+    delete:
+      responses:
+        200:
+          description: Properly deleted
+        404:
+          description: Not found
+        500:
+          description: Failed to delete
 
 components:
   schemas:
