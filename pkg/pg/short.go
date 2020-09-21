@@ -8,20 +8,10 @@ import (
 	"github.com/go-pg/pg/v9"
 )
 
-var (
-	ErrNotFound     = errors.New("not found")
-	ErrAlreadyInUse = errors.New("already in use")
-)
+var ErrNotFound = errors.New("not found")
 
 func (db *DB) InsertShort(l *model.ShortLink) (*model.ShortLink, error) {
-	_, err := db.GetDestinationLink(l.ShortPath)
-	if err == nil {
-		return nil, ErrAlreadyInUse
-	}
-	if err != nil && !errors.Is(err, ErrNotFound) {
-		return nil, fmt.Errorf("unexpected error: %w", err)
-	}
-	err = db.Insert(l)
+	err := db.Insert(l)
 	if err != nil {
 		return nil, err
 	}
