@@ -43,12 +43,12 @@ func (db *DB) GetLinkShorts() ([]model.ShortLink, error) {
 
 func (db *DB) DeleteShort(short string) (*model.ShortLink, error) {
 	l := &model.ShortLink{}
-	_, err := db.Model(l).Where("short_path = ?", l.ShortPath).Delete()
+	res, err := db.Model(l).Where("short_path = ?", short).Delete()
 	if err != nil {
-		if errors.Is(err, pg.ErrNoRows) {
-			return nil, ErrNotFound
-		}
 		return nil, fmt.Errorf("unexpected select failure: %w", err)
+	}
+	if res.RowsAffected() == 0 {
+		return nil, ErrNotFound
 	}
 	return l, nil
 }
