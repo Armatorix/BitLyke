@@ -42,12 +42,6 @@ paths:
         500:
           description: Internal server error
   /api/:lid:
-    get:
-      responses:
-        307:
-          description: Redirects to real link
-        404:
-          description: Not found record
     delete:
       responses:
         200:
@@ -56,6 +50,13 @@ paths:
           description: Not found
         500:
           description: Failed to delete
+  /:lid:
+    get:
+      responses:
+        307:
+          description: Redirects to real link
+        404:
+          description: Not found record
 
 components:
   schemas:

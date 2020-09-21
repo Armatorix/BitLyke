@@ -37,13 +37,13 @@ func main() {
 	e.Use(middleware.CORS())
 	e.GET("/public/health-check", endpoints.Healthcheck)
 
-	shorts := e.Group("/api")
+	api := e.Group("/api")
 
 	h := endpoints.New(db)
-	shorts.GET("", h.GetAllShorts)
-	shorts.POST("", h.CreateShort)
-	shorts.GET("/:link", h.GetShort)
-	shorts.DELETE("/:link", h.DeleteShort)
+	api.GET("", h.GetAllShorts)
+	api.POST("", h.CreateShort)
+	api.DELETE("/:link", h.DeleteShort)
+	e.GET("/:link", h.GetShort)
 
 	e.Logger.Fatal(e.Start(cfg.Server.Address).Error())
 }
