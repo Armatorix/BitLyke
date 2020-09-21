@@ -25,12 +25,12 @@ var (
 type DefaultApiService service
 
 /*
-ShortGet Method for ShortGet
+ApiGet Method for ApiGet
 Returns all short links
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 @return []ShortLink
 */
-func (a *DefaultApiService) ShortGet(ctx _context.Context) ([]ShortLink, *_nethttp.Response, error) {
+func (a *DefaultApiService) ApiGet(ctx _context.Context) ([]ShortLink, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
@@ -41,7 +41,7 @@ func (a *DefaultApiService) ShortGet(ctx _context.Context) ([]ShortLink, *_netht
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/short"
+	localVarPath := a.client.cfg.BasePath + "/api"
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -100,10 +100,10 @@ func (a *DefaultApiService) ShortGet(ctx _context.Context) ([]ShortLink, *_netht
 }
 
 /*
-ShortLidDelete Method for ShortLidDelete
+ApiLidDelete Method for ApiLidDelete
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 */
-func (a *DefaultApiService) ShortLidDelete(ctx _context.Context) (*_nethttp.Response, error) {
+func (a *DefaultApiService) ApiLidDelete(ctx _context.Context) (*_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodDelete
 		localVarPostBody     interface{}
@@ -113,7 +113,7 @@ func (a *DefaultApiService) ShortLidDelete(ctx _context.Context) (*_nethttp.Resp
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/short/:lid"
+	localVarPath := a.client.cfg.BasePath + "/api/:lid"
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -163,10 +163,10 @@ func (a *DefaultApiService) ShortLidDelete(ctx _context.Context) (*_nethttp.Resp
 }
 
 /*
-ShortLidGet Method for ShortLidGet
+ApiLidGet Method for ApiLidGet
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 */
-func (a *DefaultApiService) ShortLidGet(ctx _context.Context) (*_nethttp.Response, error) {
+func (a *DefaultApiService) ApiLidGet(ctx _context.Context) (*_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
@@ -176,7 +176,7 @@ func (a *DefaultApiService) ShortLidGet(ctx _context.Context) (*_nethttp.Respons
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/short/:lid"
+	localVarPath := a.client.cfg.BasePath + "/api/:lid"
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -226,13 +226,13 @@ func (a *DefaultApiService) ShortLidGet(ctx _context.Context) (*_nethttp.Respons
 }
 
 /*
-ShortPost Method for ShortPost
+ApiPost Method for ApiPost
 Creates new short link
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param shortLink
 @return ShortLink
 */
-func (a *DefaultApiService) ShortPost(ctx _context.Context, shortLink ShortLink) (ShortLink, *_nethttp.Response, error) {
+func (a *DefaultApiService) ApiPost(ctx _context.Context, shortLink ShortLink) (ShortLink, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
@@ -243,7 +243,7 @@ func (a *DefaultApiService) ShortPost(ctx _context.Context, shortLink ShortLink)
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/short"
+	localVarPath := a.client.cfg.BasePath + "/api"
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}

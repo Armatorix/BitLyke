@@ -8,7 +8,7 @@ info:
   description: BITLY liKE API
   version: 0.1.0
 paths:
-  /short:
+  /api:
     get:
       description: Returns all short links
       responses:
@@ -41,7 +41,7 @@ paths:
           description: Short url already in use
         500:
           description: Internal server error
-  /short/:lid:
+  /api/:lid:
     get:
       responses:
         307:

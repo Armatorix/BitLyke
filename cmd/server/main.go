@@ -37,7 +37,7 @@ func main() {
 	e.Use(middleware.CORS())
 	e.GET("/public/health-check", endpoints.Healthcheck)
 
-	shorts := e.Group("/short")
+	shorts := e.Group("/api")
 
 	h := endpoints.New(db)
 	shorts.GET("", h.GetAllShorts)
