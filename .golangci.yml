@@ -1,4 +1,5 @@
 issues:
+  # List all of them
   max-issues-per-linter: 0
   max-same-issues: 0
 
