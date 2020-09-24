@@ -11,7 +11,7 @@ type Handler struct {
 	db *pg.DB
 }
 
-func New(db *pg.DB) *Handler {
+func NewHandler(db *pg.DB) *Handler {
 	return &Handler{db}
 }
 

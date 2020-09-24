@@ -39,7 +39,7 @@ func main() {
 
 	api := e.Group("/api")
 
-	h := endpoints.New(db)
+	h := endpoints.NewHandler(db)
 	api.GET("", h.GetAllShorts)
 	api.POST("", h.CreateShort)
 	api.DELETE("/:link", h.DeleteShort)
