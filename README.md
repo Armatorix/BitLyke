@@ -29,3 +29,7 @@ make test-e2e
 ## Roadmap
 
 * terraform code with GCP/Heroku deployment
+
+* simple frontend backend
+
+* authorization
