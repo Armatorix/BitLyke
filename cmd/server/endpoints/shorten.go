@@ -41,7 +41,7 @@ func (h *Handler) CreateShort(c echo.Context) error {
 		}
 		return c.NoContent(http.StatusInternalServerError)
 	}
-	return c.JSON(http.StatusOK, ls)
+	return c.JSON(http.StatusCreated, ls)
 }
 
 type getShortedRequest struct {
@@ -76,12 +76,12 @@ func (h *Handler) DeleteShort(c echo.Context) error {
 		return c.NoContent(http.StatusBadRequest)
 	}
 
-	l, err := h.db.DeleteShort(req.Link)
+	err = h.db.DeleteShort(req.Link)
 	if err != nil {
 		if errors.Is(err, pg.ErrNotFound) {
 			return c.NoContent(http.StatusNotFound)
 		}
 		return c.NoContent(http.StatusInternalServerError)
 	}
-	return c.JSON(http.StatusOK, l)
+	return nil
 }

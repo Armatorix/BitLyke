@@ -6,6 +6,10 @@ compose = docker-compose -f deployments/docker/docker-compose.yml
 run:
 	${compose} up --build -d
 
+.PHONY: run-db-only
+run-db-only:
+	${compose} up -d postgres
+
 .PHONY: stop
 stop:
 	${compose} down
