@@ -77,6 +77,8 @@ paths:
           description: Redirects to real link
         404:
           description: Not found record
+        500:
+          description: Unexpected error
 
 components:
   schemas:
