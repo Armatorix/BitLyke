@@ -101,12 +101,12 @@ func (a *DefaultApiService) ApiGet(ctx _context.Context) ([]ShortLink, *_nethttp
 }
 
 /*
-ApiLidDelete Method for ApiLidDelete
-Deletes the redirection pointed by lid
+ApiLinkIdDelete Method for ApiLinkIdDelete
+Deletes the redirection pointed by link-id
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param lid
+ * @param linkId
 */
-func (a *DefaultApiService) ApiLidDelete(ctx _context.Context, lid string) (*_nethttp.Response, error) {
+func (a *DefaultApiService) ApiLinkIdDelete(ctx _context.Context, linkId string) (*_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodDelete
 		localVarPostBody     interface{}
@@ -116,8 +116,8 @@ func (a *DefaultApiService) ApiLidDelete(ctx _context.Context, lid string) (*_ne
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/api/{lid}"
-	localVarPath = strings.Replace(localVarPath, "{"+"lid"+"}", _neturl.PathEscape(parameterToString(lid, "")), -1)
+	localVarPath := a.client.cfg.BasePath + "/api/{link-id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"link-id"+"}", _neturl.PathEscape(parameterToString(linkId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -246,12 +246,12 @@ func (a *DefaultApiService) ApiPost(ctx _context.Context, shortLink ShortLink) (
 }
 
 /*
-LidGet Method for LidGet
-Redirects to the url pointed by lid
+LinkIdGet Method for LinkIdGet
+Redirects to the url pointed by link-id
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param lid
+ * @param linkId
 */
-func (a *DefaultApiService) LidGet(ctx _context.Context, lid string) (*_nethttp.Response, error) {
+func (a *DefaultApiService) LinkIdGet(ctx _context.Context, linkId string) (*_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
@@ -261,8 +261,8 @@ func (a *DefaultApiService) LidGet(ctx _context.Context, lid string) (*_nethttp.
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/{lid}"
-	localVarPath = strings.Replace(localVarPath, "{"+"lid"+"}", _neturl.PathEscape(parameterToString(lid, "")), -1)
+	localVarPath := a.client.cfg.BasePath + "/{link-id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"link-id"+"}", _neturl.PathEscape(parameterToString(linkId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}

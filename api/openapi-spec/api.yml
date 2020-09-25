@@ -1,5 +1,5 @@
 openapi: 3.0.3
-# for online validation or view use https://editor.swagger.io/
+# for online valink-idation or view use https://editor.swagger.io/
 servers:
   - url: "http://localhost:8080"
 
@@ -47,11 +47,11 @@ paths:
           description: Short url already in use
         500:
           description: Internal server error
-  "/api/{lid}":
+  "/api/{link-id}":
     delete:
-      description: Deletes the redirection pointed by lid
+      description: Deletes the redirection pointed by link-id
       parameters:
-        - name: lid
+        - name: link-id
           in: path
           required: true
           schema:
@@ -63,11 +63,11 @@ paths:
           description: Not found
         500:
           description: Failed to delete
-  "/{lid}":
+  "/{link-id}":
     get:
-      description: Redirects to the url pointed by lid
+      description: Redirects to the url pointed by link-id
       parameters:
-        - name: lid
+        - name: link-id
           in: path
           required: true
           schema:

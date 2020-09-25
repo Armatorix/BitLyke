@@ -62,25 +62,25 @@ func testBasicFlow(t *testing.T) {
 		assert.Equal(t, tt, sl)
 
 		for _, alreadyShorted := range tts[:i+1] {
-			resp, err := api.LidGet(ctx, alreadyShorted.ShortPath)
+			resp, err := api.LinkIdGet(ctx, alreadyShorted.ShortPath)
 			assert.EqualError(t, err, "307 Temporary Redirect")
 			assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
 		}
 	}
 
 	for i, tt := range tts {
-		resp, err := api.ApiLidDelete(ctx, tt.ShortPath)
+		resp, err := api.ApiLinkIdDelete(ctx, tt.ShortPath)
 		assert.NoError(t, err, tt)
 		assert.Equal(t, http.StatusOK, resp.StatusCode, tt)
 
 		for _, deleted := range tts[:i+1] {
-			resp, err := api.LidGet(ctx, deleted.ShortPath)
+			resp, err := api.LinkIdGet(ctx, deleted.ShortPath)
 			assert.Error(t, err)
 			assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 		}
 
 		for _, stillShorted := range tts[i+1:] {
-			resp, err := api.LidGet(ctx, stillShorted.ShortPath)
+			resp, err := api.LinkIdGet(ctx, stillShorted.ShortPath)
 			assert.EqualError(t, err, "307 Temporary Redirect")
 			assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
 		}
@@ -113,7 +113,7 @@ func testDuplicatedShorts(t *testing.T) {
 		assert.Equal(t, http.StatusCreated, resp.StatusCode, tt)
 		assert.Equal(t, tt, sl)
 
-		resp, err = api.LidGet(ctx, tt.ShortPath)
+		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
 		assert.EqualError(t, err, "307 Temporary Redirect")
 		assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
 
@@ -121,23 +121,23 @@ func testDuplicatedShorts(t *testing.T) {
 		assert.Error(t, err, tt)
 		assert.Equal(t, http.StatusConflict, resp.StatusCode, tt)
 
-		resp, err = api.LidGet(ctx, tt.ShortPath)
+		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
 		assert.EqualError(t, err, "307 Temporary Redirect")
 		assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
 
-		resp, err = api.ApiLidDelete(ctx, tt.ShortPath)
+		resp, err = api.ApiLinkIdDelete(ctx, tt.ShortPath)
 		assert.NoError(t, err, tt)
 		assert.Equal(t, http.StatusOK, resp.StatusCode, tt)
 
-		resp, err = api.LidGet(ctx, tt.ShortPath)
+		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
 		assert.Error(t, err)
 		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 
-		resp, err = api.ApiLidDelete(ctx, tt.ShortPath)
+		resp, err = api.ApiLinkIdDelete(ctx, tt.ShortPath)
 		assert.Error(t, err, tt)
 		assert.Equal(t, http.StatusNotFound, resp.StatusCode, tt)
 
-		resp, err = api.LidGet(ctx, tt.ShortPath)
+		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
 		assert.Error(t, err)
 		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 	}
@@ -162,7 +162,7 @@ func cleanupDB(t *testing.T) {
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 
 	for _, ls := range sls {
-		resp, err = api.ApiLidDelete(ctx, ls.ShortPath)
+		resp, err = api.ApiLinkIdDelete(ctx, ls.ShortPath)
 		assert.NoError(t, err, ls)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 	}
