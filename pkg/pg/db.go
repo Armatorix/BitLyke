@@ -9,15 +9,20 @@ import (
 	"github.com/go-pg/pg/v9"
 )
 
+const (
+	unix = "unix"
+	tcp  = "tcp"
+)
+
 type DB struct {
 	*pg.DB
 }
 
 func getNetwork(addr string) string {
 	if strings.Contains(addr, "/") {
-		return "unix"
+		return unix
 	}
-	return "tcp"
+	return tcp
 }
 
 func New(cfg config.PostgresConfig) (*DB, error) {

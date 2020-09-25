@@ -60,9 +60,12 @@ format:
 
 test-e2e: 
 	$(MAKE) run
-	./scripts/wait_for_it.sh http://localhost:8080/public/health-check
-	go test ./test/e2e
+	bash ./scripts/wait_for_it.sh
+	go test --count=1 ./test/e2e
 	$(MAKE) stop
+
+test:
+	go test -short --count=1 ./...
 
 openapi-spec-validate:
 	swagger-cli validate ./api/openapi-spec/api.yml

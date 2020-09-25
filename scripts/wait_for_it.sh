@@ -1,13 +1,12 @@
 #/bin/bash
 
-max_retry=10
-counter=0
-until [ -n $(curl -sf ${1}) ]
-do
+max_retry=6
+count=0
+until [ ! $(nc -z localhost 8080) ]; do
    sleep 2
-   [[ counter -eq $max_retry ]] && echo "Failed all api checks!" && exit 1
-   echo "Trying again. Try #$counter"
-   ((counter++))
+   [ $count -eq $max_retry ] && echo "Failed all api checks!" && exit 1
+   echo "Trying again. Try #${count}"
+   ((count++))
 done
 
 echo "Health check ready"

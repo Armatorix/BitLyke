@@ -24,9 +24,8 @@ var (
 
 func TestAPI(t *testing.T) {
 
-	resp, err := api.PublicHealthCheckGet(ctx)
-	if err != nil || resp.StatusCode != 200 {
-		t.Fatal("API health check failed")
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
 	}
 	t.Run("remove shorts", cleanupDB)
 	t.Run("basic flow", testBasicFlow)
