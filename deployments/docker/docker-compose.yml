@@ -17,7 +17,7 @@ services:
       context: ../../
     env_file: ../../configs/env.local.api
     ports:
-      - "8081:8081"
+      - "8080:8080"
     network_mode: host
     depends_on:
       - postgres

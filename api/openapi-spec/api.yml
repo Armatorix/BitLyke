@@ -1,7 +1,7 @@
 openapi: 3.0.3
 # for online validation or view use https://editor.swagger.io/
 servers:
-  - url: "http://localhost:8081"
+  - url: "http://localhost:8080"
 
 info:
   title: Bitlyke

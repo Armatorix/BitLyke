@@ -7,7 +7,6 @@ import (
 	"github.com/Armatorix/BitLyke/pkg/endpoints"
 	"github.com/Armatorix/BitLyke/pkg/pg"
 	"github.com/Armatorix/BitLyke/pkg/validator"
-	"github.com/avast/retry-go"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -18,8 +17,7 @@ func main() {
 		log.Fatalf("failed env init: %v", err)
 	}
 
-	db := pg.New(cfg.Postgres)
-	err = retry.Do(db.TestRequest)
+	db, err := pg.New(cfg.Postgres)
 	if err != nil {
 		log.Fatalf("failed connection test: %v", err)
 	}

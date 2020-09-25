@@ -27,7 +27,7 @@ type Config struct {
 func New() *Config {
 	return &Config{
 		Server: ServerConfig{
-			Address: ":8081",
+			Address: ":8080",
 		},
 		Postgres: PostgresConfig{
 			Address:  "localhost:5432",

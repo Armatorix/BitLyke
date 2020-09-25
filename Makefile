@@ -60,7 +60,7 @@ format:
 
 test-e2e: 
 	$(MAKE) run
-	./scripts/wait_for_it.sh http://localhost:8081/public/health-check
+	./scripts/wait_for_it.sh http://localhost:8080/public/health-check
 	go test ./test/e2e
 	$(MAKE) stop
 

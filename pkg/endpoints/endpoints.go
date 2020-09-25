@@ -6,7 +6,6 @@ import (
 
 	"github.com/Armatorix/BitLyke/pkg/model"
 	"github.com/Armatorix/BitLyke/pkg/pg"
-	"github.com/Armatorix/BitLyke/pkg/xgopg"
 	"github.com/labstack/echo/v4"
 )
 
@@ -51,7 +50,7 @@ func (h *Handler) CreateShort(c echo.Context) error {
 		RealUrl:   req.RealUrl,
 	})
 	if err != nil {
-		if xgopg.IsDuplicatedKeyErr(err) {
+		if errors.Is(err, pg.ErrDuplicatedEntry) {
 			return c.NoContent(http.StatusConflict)
 		}
 		return c.NoContent(http.StatusInternalServerError)

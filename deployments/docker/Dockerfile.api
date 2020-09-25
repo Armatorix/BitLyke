@@ -10,6 +10,6 @@ COPY ./pkg ./pkg
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd/bitlyke
 
-EXPOSE 8081
+EXPOSE 8080
 
 CMD ["./main"]

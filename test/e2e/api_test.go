@@ -11,7 +11,7 @@ import (
 
 var (
 	api = model.NewAPIClient(&model.Configuration{
-		Host:   "localhost:8081",
+		Host:   "localhost:8080",
 		Scheme: "http",
 		HTTPClient: &http.Client{
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {

@@ -8,11 +8,22 @@ import (
 	"github.com/go-pg/pg/v9"
 )
 
-var ErrNotFound = errors.New("not found")
+var (
+	ErrNotFound        = errors.New("not found")
+	ErrDuplicatedEntry = errors.New("duplicated entry")
+)
+
+func isDuplicatedKeyErr(err error) bool {
+	pgerr, ok := err.(pg.Error)
+	return !ok || pgerr.IntegrityViolation()
+
+}
 
 func (db *DB) InsertShort(l *model.ShortLink) (*model.ShortLink, error) {
-	err := db.Insert(l)
-	if err != nil {
+	if err := db.Insert(l); err != nil {
+		if isDuplicatedKeyErr(err) {
+			return nil, ErrDuplicatedEntry
+		}
 		return nil, err
 	}
 	return l, nil
