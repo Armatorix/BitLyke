@@ -18,9 +18,11 @@ func NewHandler(db *pg.DB) *Handler {
 	return &Handler{db}
 }
 
+var statusOK = map[string]string{"status": "ok"}
+
 func Healthcheck(c echo.Context) error {
 	c.Logger().Info("healthcheck")
-	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
+	return c.JSON(http.StatusOK, statusOK)
 }
 
 func (h *Handler) GetAllShorts(c echo.Context) error {
