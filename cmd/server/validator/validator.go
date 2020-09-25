@@ -21,7 +21,6 @@ func isURLString(fl validator.FieldLevel) bool {
 }
 
 func isForbiddenShortUrl(fl validator.FieldLevel) bool {
-	fmt.Println("WTF", fl.Field().String())
 	return fl.Field().String() != "api"
 }
 

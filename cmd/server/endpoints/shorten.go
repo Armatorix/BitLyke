@@ -2,7 +2,6 @@ package endpoints
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/Armatorix/BitLyke/pkg/model"
@@ -30,7 +29,6 @@ func (h *Handler) CreateShort(c echo.Context) error {
 		return c.NoContent(http.StatusBadRequest)
 	}
 	if err := c.Validate(req); err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusBadRequest)
 	}
 	ls, err := h.db.InsertShort(&model.ShortLink{
