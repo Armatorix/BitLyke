@@ -8,13 +8,13 @@ info:
   description: BITLY liKE API
   version: 0.1.0
 paths:
-  /public/health-check:
+  "/public/health-check":
     get:
       description: Verifies if service is healthy
       responses:
         200:
           description: healthy service
-  /api:
+  "/api":
     get:
       description: Returns all short links
       responses:
