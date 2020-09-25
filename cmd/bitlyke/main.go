@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
-	"github.com/Armatorix/BitLyke/cmd/server/endpoints"
-	"github.com/Armatorix/BitLyke/cmd/server/validator"
 	"github.com/Armatorix/BitLyke/pkg/config"
+	"github.com/Armatorix/BitLyke/pkg/endpoints"
 	"github.com/Armatorix/BitLyke/pkg/pg"
+	"github.com/Armatorix/BitLyke/pkg/validator"
 	"github.com/avast/retry-go"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
