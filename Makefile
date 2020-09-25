@@ -56,11 +56,7 @@ lint:
 
 .PHONY: formatter
 format:
-	find . \
-		-type f \
-		-name \
-		"*.go" \
-		| xargs goimports -w
+	goimports -w **/*.go 
 
 test-e2e: 
 	$(MAKE) run
