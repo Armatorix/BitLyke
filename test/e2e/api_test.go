@@ -143,8 +143,19 @@ func testDuplicatedShorts(t *testing.T) {
 	}
 }
 func testForbiddenCases(t *testing.T) {
-
+	ttsForbidden := []model.ShortLink{
+		{
+			ShortPath: "api",
+			RealUrl:   "https://www.google.com",
+		},
+	}
+	for _, tt := range ttsForbidden {
+		_, resp, err := api.ApiPost(ctx, tt)
+		assert.Error(t, err, tt)
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode, tt)
+	}
 }
+
 func cleanupDB(t *testing.T) {
 	sls, resp, err := api.ApiGet(ctx)
 	assert.NoError(t, err)

@@ -20,6 +20,11 @@ func isURLString(fl validator.FieldLevel) bool {
 	return isURL(fl.Field().String())
 }
 
+func isForbiddenShortUrl(fl validator.FieldLevel) bool {
+	fmt.Println("WTF", fl.Field().String())
+	return fl.Field().String() != "api"
+}
+
 func (cv *CustomValidator) Validate(i interface{}) error {
 	return cv.Validator.Struct(i)
 }
@@ -28,7 +33,13 @@ func New() (*CustomValidator, error) {
 	v := validator.New()
 	err := v.RegisterValidation("url", isURLString)
 	if err != nil {
-		return nil, fmt.Errorf("building custom validator: %w", err)
+		return nil, fmt.Errorf("building custom url validator: %w", err)
 	}
+
+	err = v.RegisterValidation("short", isForbiddenShortUrl)
+	if err != nil {
+		return nil, fmt.Errorf("building custom short url validator: %w", err)
+	}
+
 	return &CustomValidator{v}, nil
 }
