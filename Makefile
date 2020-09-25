@@ -1,6 +1,6 @@
 OPENAPI_PATH=./api/openapi-spec/api.yml
 GENERATE_PATH=./pkg/model
-compose = docker-compose -f deployments/docker/docker-compose.yml
+compose = docker-compose  --project-name bitlyke -f deployments/docker/docker-compose.yml
 
 .PHONY: run
 run:
@@ -56,10 +56,13 @@ lint:
 
 .PHONY: formatter
 format:
-	goimports -w **/*.go 
+	goimports -w ./..
 
 test-e2e: 
 	$(MAKE) run
 	./scripts/wait_for_it.sh http://localhost:8081/public/health-check
 	go test ./test/e2e
 	$(MAKE) stop
+
+openapi-spec-validate:
+	swagger-cli validate ./api/openapi-spec/api.yml
