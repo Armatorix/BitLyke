@@ -6,9 +6,7 @@ services:
     ports:
       - "5432:5432"
     restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: bitlyke
+    env_file: ../../configs/env.local.pg
     network_mode: host
     volumes:
       - ../../database/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
