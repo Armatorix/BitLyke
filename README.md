@@ -33,3 +33,5 @@ make test-e2e
 * simple frontend backend
 
 * authorization
+
+* circle ci config
