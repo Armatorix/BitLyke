@@ -1,6 +1,6 @@
 OPENAPI_PATH=./api/openapi-spec/api.yml
 GENERATE_PATH=./pkg/model
-compose = docker-compose  --project-name bitlyke -f deployments/docker/docker-compose.yml
+compose = docker-compose  --project-name bitlyke -f docker/docker-compose.yml
 
 .PHONY: run
 run:
