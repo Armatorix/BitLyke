@@ -5,6 +5,7 @@ compose = docker-compose  --project-name bitlyke -f docker/docker-compose.yml
 .PHONY: run
 run:
 	${compose} up --build -d
+	bash ./scripts/wait_for_it.sh
 
 .PHONY: run-db-only
 run-db-only:
@@ -60,7 +61,6 @@ format:
 
 test-e2e: 
 	$(MAKE) run
-	bash ./scripts/wait_for_it.sh
 	go test --count=1 ./test/e2e
 	$(MAKE) stop
 
@@ -68,4 +68,4 @@ test:
 	go test -short --count=1 ./...
 
 openapi-spec-validate:
-	swagger-cli validate ./api/openapi-spec/api.yml
+	swagger-cli validate ./api/openapi-spec/api.yaml

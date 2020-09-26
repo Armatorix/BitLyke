@@ -3,6 +3,7 @@ package endpoints
 import (
 	"errors"
 	"net/http"
+	"sync"
 
 	"github.com/Armatorix/BitLyke/pkg/model"
 	"github.com/Armatorix/BitLyke/pkg/pg"
@@ -10,11 +11,13 @@ import (
 )
 
 type Handler struct {
-	db *pg.DB
+	db      *pg.DB
+	counter map[string]int64
+	sync.RWMutex
 }
 
 func NewHandler(db *pg.DB) *Handler {
-	return &Handler{db}
+	return &Handler{db: db, counter: make(map[string]int64)}
 }
 
 var statusOK = map[string]string{"status": "ok"}
@@ -76,6 +79,7 @@ func (h *Handler) GetShort(c echo.Context) error {
 		}
 		return c.NoContent(http.StatusInternalServerError)
 	}
+	h.incOccurance(req.Link)
 	return c.Redirect(http.StatusTemporaryRedirect, l.RealUrl)
 }
 
@@ -98,4 +102,16 @@ func (h *Handler) DeleteShort(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 	return nil
+}
+
+func (h *Handler) GetCounts(c echo.Context) error {
+	h.RLock()
+	defer h.RUnlock()
+	return c.JSON(http.StatusOK, h.counter)
+}
+
+func (h *Handler) incOccurance(linkID string) {
+	h.Lock()
+	defer h.Unlock()
+	h.counter[linkID]++
 }

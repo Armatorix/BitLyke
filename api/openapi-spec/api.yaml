@@ -14,6 +14,17 @@ paths:
       responses:
         200:
           description: healthy service
+  "/counts":
+    get:
+      description: Returns the usage of link id's usage
+      responses:
+        200:
+          description: Properly returned statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Counts"
+
   "/api":
     get:
       description: Returns all short links
@@ -79,9 +90,12 @@ paths:
           description: Not found record
         500:
           description: Unexpected error
-
 components:
   schemas:
+    Counts:
+      type: object
+      additionalProperties:
+        type: integer
     ShortLinks:
       type: array
       items:

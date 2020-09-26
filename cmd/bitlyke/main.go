@@ -35,9 +35,10 @@ func main() {
 	e.Use(middleware.CORS())
 	e.GET("/public/health-check", endpoints.Healthcheck)
 
-	api := e.Group("/api")
-
 	h := endpoints.NewHandler(db)
+	e.GET("/counts", h.GetCounts)
+
+	api := e.Group("/api")
 	api.GET("", h.GetAllShorts)
 	api.POST("", h.CreateShort)
 	api.DELETE("/:link", h.DeleteShort)
