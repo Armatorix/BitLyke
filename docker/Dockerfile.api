@@ -1,4 +1,4 @@
-FROM golang:1.15.2
+FROM golang:1.15.2 AS builder
 
 WORKDIR /go/src/github.com/Armatorix/BitLyke
 
@@ -10,6 +10,11 @@ COPY ./pkg ./pkg
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd/bitlyke
 
+FROM scratch
+
+WORKDIR /app
+COPY --from=builder /go/src/github.com/Armatorix/BitLyke/main /app/
+
 EXPOSE 8080
 
-CMD ["./main"]
+ENTRYPOINT [ "./main" ]
