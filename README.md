@@ -1,5 +1,7 @@
 # Bitlyke
 
+The bit.ly like shortener.
+
 ## Requirements
 
 * docker-compose
