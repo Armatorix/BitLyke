@@ -1,10 +1,9 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/caarlos0/env/v6"
 	"github.com/labstack/gommon/log"
+	"github.com/pkg/errors"
 )
 
 type ServerConfig struct {
@@ -41,7 +40,7 @@ func New() *Config {
 func FromEnv() (*Config, error) {
 	cfg := &Config{}
 	if err := env.Parse(cfg); err != nil {
-		return nil, fmt.Errorf("env parsing: %w", err)
+		return nil, errors.Wrap(err, "env parsing: %w")
 	}
 	return cfg, nil
 }

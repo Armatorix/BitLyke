@@ -1,12 +1,12 @@
 package pg
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/Armatorix/BitLyke/pkg/config"
 	"github.com/avast/retry-go"
 	"github.com/go-pg/pg/v9"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -47,10 +47,10 @@ func (db *DB) TestRequest() error {
 	var num int
 	_, err := db.Query(pg.Scan(&num), "SELECT ?", testNum)
 	if err != nil {
-		return fmt.Errorf("connection check failed: %w", err)
+		return errors.Wrap(err, "connection check failed")
 	}
 	if num != testNum {
-		return fmt.Errorf("connection check failed: should have %d, was %d", testNum, num)
+		return errors.Wrap(err, "connection check failed: different value")
 	}
 	return nil
 }

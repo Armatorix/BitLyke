@@ -1,9 +1,8 @@
 package validator
 
 import (
-	"fmt"
-
 	"github.com/go-playground/validator/v10"
+	"github.com/pkg/errors"
 )
 
 type CustomValidator struct {
@@ -23,7 +22,7 @@ func New() (*CustomValidator, error) {
 
 	err := v.RegisterValidation("short", isForbiddenShortUrl)
 	if err != nil {
-		return nil, fmt.Errorf("building custom short url validator: %w", err)
+		return nil, errors.Wrap(err, "building custom short url validator")
 	}
 
 	return &CustomValidator{v}, nil

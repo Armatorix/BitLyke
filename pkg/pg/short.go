@@ -1,11 +1,9 @@
 package pg
 
 import (
-	"errors"
-	"fmt"
-
 	"github.com/Armatorix/BitLyke/pkg/model"
 	"github.com/go-pg/pg/v9"
+	"github.com/pkg/errors"
 )
 
 var (
@@ -38,7 +36,7 @@ func (db *DB) GetDestinationLink(short string) (*model.ShortLink, error) {
 		if errors.Is(err, pg.ErrNoRows) {
 			return nil, ErrNotFound
 		}
-		return nil, fmt.Errorf("unexpected select failure: %w", err)
+		return nil, errors.Wrap(err, "unexpected select failure")
 	}
 	return l, nil
 }
@@ -55,7 +53,7 @@ func (db *DB) GetLinkShorts() ([]model.ShortLink, error) {
 func (db *DB) DeleteShort(short string) error {
 	res, err := db.Model((*model.ShortLink)(nil)).Where("\"short_path\" = ?", short).Delete()
 	if err != nil {
-		return fmt.Errorf("unexpected select failure: %w", err)
+		return errors.Wrap(err, "unexpected select failure")
 	}
 	if res.RowsAffected() == 0 {
 		return ErrNotFound
