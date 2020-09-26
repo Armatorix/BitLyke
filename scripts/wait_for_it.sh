@@ -11,4 +11,7 @@ do
    echo "Check #${i} failed"
    echo "Retry in 3s..."
    sleep 3
-done
+done 
+
+echo "All checks failed."
+exit 1 
