@@ -37,7 +37,7 @@ func (h *Handler) GetAllShorts(c echo.Context) error {
 
 type postShortRequest struct {
 	ShortPath string `json:"short_path" validate:"required,ne=api,ne=counts,alphanum"`
-	RealUrl   string `json:"real_url" validate:"required,uri"`
+	RealURL   string `json:"real_url" validate:"required,uri"`
 }
 
 func (h *Handler) CreateShort(c echo.Context) error {
@@ -50,7 +50,7 @@ func (h *Handler) CreateShort(c echo.Context) error {
 	}
 	ls, err := h.db.InsertShort(&model.ShortLink{
 		ShortPath: req.ShortPath,
-		RealUrl:   req.RealUrl,
+		RealUrl:   req.RealURL,
 	})
 	if err != nil {
 		if errors.Is(err, pg.ErrDuplicatedEntry) {

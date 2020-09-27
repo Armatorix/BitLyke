@@ -14,7 +14,6 @@ var (
 func isDuplicatedKeyErr(err error) bool {
 	pgerr, ok := err.(pg.Error)
 	return !ok || pgerr.IntegrityViolation()
-
 }
 
 func (db *DB) InsertShort(l *model.ShortLink) (*model.ShortLink, error) {
