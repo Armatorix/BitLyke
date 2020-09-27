@@ -66,7 +66,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            $ref: "#/components/schemas/ShortPath"
       responses:
         200:
           description: Properly deleted
@@ -82,7 +82,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            $ref: "#/components/schemas/ShortPath"
       responses:
         307:
           description: Redirects to real link
@@ -105,8 +105,10 @@ components:
       type: object
       properties:
         short_path:
-          type: string
-          pattern: "[a-zA-Z0-9]+"
+          $ref: "#/components/schemas/ShortPath"
         real_url:
           type: string
           format: uri
+    ShortPath:
+      type: string
+      pattern: "[a-zA-Z0-9]+"
