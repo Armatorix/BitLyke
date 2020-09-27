@@ -1,4 +1,4 @@
-OPENAPI_PATH=./api/openapi-spec/api.yml
+OPENAPI_PATH=./api/openapi-spec/api.yaml
 GENERATE_PATH=./pkg/model
 compose = docker-compose  --project-name bitlyke -f docker/docker-compose.yml
 
@@ -68,4 +68,4 @@ test:
 	go test -short --count=1 ./...
 
 openapi-spec-validate:
-	swagger-cli validate ./api/openapi-spec/api.yaml
+	swagger-cli validate ${OPENAPI_PATH}
