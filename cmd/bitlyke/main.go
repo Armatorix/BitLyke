@@ -6,10 +6,18 @@ import (
 	"github.com/Armatorix/BitLyke/pkg/config"
 	"github.com/Armatorix/BitLyke/pkg/endpoints"
 	"github.com/Armatorix/BitLyke/pkg/pg"
-	"github.com/Armatorix/BitLyke/pkg/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
+
+type V struct {
+	Validator *validator.Validate
+}
+
+func (cv *V) Validate(i interface{}) error {
+	return cv.Validator.Struct(i)
+}
 
 func main() {
 	cfg, err := config.FromEnv()
@@ -22,16 +30,11 @@ func main() {
 		log.Fatalf("failed connection test: %v", err)
 	}
 
-	v, err := validator.New()
-	if err != nil {
-		log.Fatalf("failed validator creation: %v", err)
-	}
-
 	e := echo.New()
 
 	e.Use(middleware.Logger())
 	e.Logger.SetLevel(cfg.Server.LogLevel)
-	e.Validator = v
+	e.Validator = &V{validator.New()}
 	e.Use(middleware.CORS())
 	e.GET("/public/health-check", endpoints.Healthcheck)
 

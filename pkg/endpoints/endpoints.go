@@ -36,7 +36,7 @@ func (h *Handler) GetAllShorts(c echo.Context) error {
 }
 
 type postShortRequest struct {
-	ShortPath string `json:"short_path" validate:"required,short"`
+	ShortPath string `json:"short_path" validate:"required,ne=api,ne=counts,alphanum"`
 	RealUrl   string `json:"real_url" validate:"required,uri"`
 }
 

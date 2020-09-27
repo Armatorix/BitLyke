@@ -52,6 +52,10 @@ func testBasicFlow(t *testing.T) {
 			ShortPath: "someurlwithparams",
 			RealUrl:   "https://www.youtube.com/watch?v=ngf1KF2_kPI",
 		},
+		{
+			ShortPath: "apitest",
+			RealUrl:   "http://letmegooglethat.com/?q=bitlyke",
+		},
 	}
 
 	for i, tt := range tts {
@@ -145,7 +149,15 @@ func testForbiddenCases(t *testing.T) {
 	ttsForbidden := []model.ShortLink{
 		{
 			ShortPath: "api",
-			RealUrl:   "https://www.google.com",
+			RealUrl:   "https://www.google.com/short-path-blocked-by-internal-path",
+		},
+		{
+			ShortPath: "counts",
+			RealUrl:   "http://localhost/short-path-blocked-by-internal-path",
+		},
+		{
+			ShortPath: "some/dummy/path",
+			RealUrl:   "https://hackerrank.com/short-path-contains-permited-sign",
 		},
 	}
 	for _, tt := range ttsForbidden {
