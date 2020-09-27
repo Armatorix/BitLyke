@@ -11,7 +11,7 @@ The bit.ly like shortener.
 
 ## Requirements
 
-* docker-compose
+- docker-compose (v1.14.0+ - with compose file v3.3 support)
 
 ## How to run
 
@@ -39,12 +39,12 @@ make test-e2e
 
 ## Roadmap
 
-* terraform code with GCP/Heroku deployment
+- terraform code with GCP/Heroku deployment
 
-* simple frontend
+- simple frontend
 
-* authorization
+- authorization
 
-* circle ci config
+- circle ci config
 
-* random shortener path generator
+- random shortener path generator
