@@ -2,6 +2,13 @@
 
 The bit.ly like shortener.
 
+- [Bitlyke](#bitlyke)
+  - [Requirements](#requirements)
+  - [How to run](#how-to-run)
+  - [Changes in api-spec](#changes-in-api-spec)
+  - [Testing](#testing)
+  - [Roadmap](#roadmap)
+
 ## Requirements
 
 * docker-compose
@@ -39,3 +46,5 @@ make test-e2e
 * authorization
 
 * circle ci config
+
+* random shortener path generator
