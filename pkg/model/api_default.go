@@ -249,16 +249,16 @@ func (a *DefaultApiService) ApiPost(ctx _context.Context, shortLink ShortLink) (
 CountsGet Method for CountsGet
 Returns the usage of link id&#39;s usage
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-@return map[string]int32
+@return map[string]int64
 */
-func (a *DefaultApiService) CountsGet(ctx _context.Context) (map[string]int32, *_nethttp.Response, error) {
+func (a *DefaultApiService) CountsGet(ctx _context.Context) (map[string]int64, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  map[string]int32
+		localVarReturnValue  map[string]int64
 	)
 
 	// create path and map variables

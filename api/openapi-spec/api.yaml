@@ -96,6 +96,7 @@ components:
       type: object
       additionalProperties:
         type: integer
+        format: int64
     ShortLinks:
       type: array
       items:
