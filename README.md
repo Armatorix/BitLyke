@@ -12,6 +12,8 @@ The bit.ly like shortener.
 make run
 ```
 
+After that the documentation will be available <http://localhost:8080>
+
 ## Changes in api-spec
 
 After doing any chenges in api spec, the model rebuild should be done
