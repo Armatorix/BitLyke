@@ -9,6 +9,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const redirectErrorMsg = "307 Temporary Redirect"
+
 var (
 	api = model.NewAPIClient(&model.Configuration{
 		Host:   "localhost:8080",
@@ -19,7 +21,7 @@ var (
 			},
 		},
 	}).DefaultApi
-	ctx = context.Background()
+	ctx = context.TODO()
 	tts = []model.ShortLink{
 		{
 			ShortPath: "test1",
@@ -62,120 +64,128 @@ func TestAPI(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
 	}
-	t.Run("remove shorts", cleanupDB)
-	t.Run("basic flow", testBasicFlow)
-	t.Run("duplicated inserts/deletions", testDuplShorts)
-	t.Run("forbidden special cases", testForbiddenCases)
-	t.Run("remove shorts", cleanupDB)
+	t.Run("remove shorts", testSuitCleanUpDB)
+	t.Run("basic flow", testSuitBasicFlow)
+	t.Run("duplicated inserts/deletions", testSuitDuplicatedShorts)
+	t.Run("forbidden special cases", testSuitForbiddenCases)
+	t.Run("remove shorts", testSuitCleanUpDB)
 }
 
-func testBasicFlow(t *testing.T) {
+func testSuitBasicFlow(t *testing.T) {
 	for i, tt := range tts {
-		sl, resp, err := api.ApiPost(ctx, tt)
-		assert.NoError(t, err, tt)
-		assert.Equal(t, http.StatusCreated, resp.StatusCode, tt)
-		assert.Equal(t, tt, sl)
-		resp.Body.Close()
-
+		testCorrectPathCreate(t, tt)
 		for _, alreadyShorted := range tts[:i+1] {
-			resp, err := api.LinkIdGet(ctx, alreadyShorted.ShortPath)
-			assert.EqualError(t, err, "307 Temporary Redirect")
-			assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
-			resp.Body.Close()
+			testCorrectRedirection(t, alreadyShorted)
 		}
 	}
 
 	for i, tt := range tts {
-		resp, err := api.ApiLinkIdDelete(ctx, tt.ShortPath)
-		assert.NoError(t, err, tt)
-		assert.Equal(t, http.StatusOK, resp.StatusCode, tt)
-		resp.Body.Close()
-
+		testCorrectDelete(t, tt)
 		for _, deleted := range tts[:i+1] {
-			resp, err := api.LinkIdGet(ctx, deleted.ShortPath)
-			assert.Error(t, err)
-			assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-			resp.Body.Close()
+			testNotFoundRedirection(t, deleted)
 		}
-
 		for _, stillShorted := range tts[i+1:] {
-			resp, err := api.LinkIdGet(ctx, stillShorted.ShortPath)
-			assert.EqualError(t, err, "307 Temporary Redirect")
-			assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
-			resp.Body.Close()
+			testCorrectRedirection(t, stillShorted)
 		}
 	}
 }
 
-func testDuplShorts(t *testing.T) {
+func testSuitDuplicatedShorts(t *testing.T) {
 	for _, tt := range tts {
-		sl, resp, err := api.ApiPost(ctx, tt)
-		assert.NoError(t, err, tt)
-		assert.Equal(t, http.StatusCreated, resp.StatusCode, tt)
-		assert.Equal(t, tt, sl)
-		resp.Body.Close()
+		testCorrectPathCreate(t, tt)
+		testCorrectRedirection(t, tt)
 
-		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
-		assert.EqualError(t, err, "307 Temporary Redirect")
-		assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
-		resp.Body.Close()
+		testDuplicatedPathCreate(t, tt)
+		testCorrectRedirection(t, tt)
 
-		_, resp, err = api.ApiPost(ctx, tt)
-		assert.Error(t, err, tt)
-		assert.Equal(t, http.StatusConflict, resp.StatusCode, tt)
-		resp.Body.Close()
-
-		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
-		assert.EqualError(t, err, "307 Temporary Redirect")
-		assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
-		resp.Body.Close()
-
-		resp, err = api.ApiLinkIdDelete(ctx, tt.ShortPath)
-		assert.NoError(t, err, tt)
-		assert.Equal(t, http.StatusOK, resp.StatusCode, tt)
-		resp.Body.Close()
-
-		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
-		assert.Error(t, err)
-		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-		resp.Body.Close()
-
-		resp, err = api.ApiLinkIdDelete(ctx, tt.ShortPath)
-		assert.Error(t, err, tt)
-		assert.Equal(t, http.StatusNotFound, resp.StatusCode, tt)
-		resp.Body.Close()
-
-		resp, err = api.LinkIdGet(ctx, tt.ShortPath)
-		assert.Error(t, err)
-		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-		resp.Body.Close()
+		testCorrectDelete(t, tt)
+		testNotFoundRedirection(t, tt)
+		testNotFoundDelete(t, tt)
 	}
 }
-func testForbiddenCases(t *testing.T) {
+
+func testSuitForbiddenCases(t *testing.T) {
 	for _, tt := range forbiddenTts {
-		_, resp, err := api.ApiPost(ctx, tt)
-		assert.Error(t, err, tt)
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode, tt)
-		resp.Body.Close()
+		testBadPathCreate(t, tt)
+		testNotRedirected(t, tt)
 	}
 }
 
-func cleanupDB(t *testing.T) {
-	sls, resp, err := api.ApiGet(ctx)
-	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	resp.Body.Close()
+func testSuitCleanUpDB(t *testing.T) {
+	sls := testCorrectGetAll(t)
 
 	for _, ls := range sls {
-		resp, err = api.ApiLinkIdDelete(ctx, ls.ShortPath)
-		assert.NoError(t, err, ls)
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		resp.Body.Close()
+		testCorrectDelete(t, ls)
 	}
 
-	sls, resp, err = api.ApiGet(ctx)
+	sls = testCorrectGetAll(t)
+	assert.Len(t, sls, 0)
+}
+
+func testCorrectRedirection(t *testing.T, tt model.ShortLink) {
+	resp, err := api.LinkIdGet(ctx, tt.ShortPath)
+	resp.Body.Close()
+	assert.EqualError(t, err, redirectErrorMsg)
+	assert.Equal(t, http.StatusTemporaryRedirect, resp.StatusCode)
+
+	redirURL, err := resp.Location()
+	assert.NoError(t, err)
+	assert.Equal(t, tt.RealUrl, redirURL.String())
+}
+
+func testNotFoundRedirection(t *testing.T, tt model.ShortLink) {
+	resp, err := api.LinkIdGet(ctx, tt.ShortPath)
+	resp.Body.Close()
+	assert.Error(t, err, tt)
+	assert.Equal(t, http.StatusNotFound, resp.StatusCode, tt)
+}
+
+func testNotRedirected(t *testing.T, tt model.ShortLink) {
+	resp, _ := api.LinkIdGet(ctx, tt.ShortPath)
+	resp.Body.Close()
+	assert.NotEqual(t, http.StatusTemporaryRedirect, resp.StatusCode, tt)
+}
+
+func testCorrectPathCreate(t *testing.T, tt model.ShortLink) {
+	sl, resp, err := api.ApiPost(ctx, tt)
+	resp.Body.Close()
+	assert.NoError(t, err, tt)
+	assert.Equal(t, http.StatusCreated, resp.StatusCode, tt)
+	assert.Equal(t, tt, sl)
+}
+
+func testDuplicatedPathCreate(t *testing.T, tt model.ShortLink) {
+	_, resp, err := api.ApiPost(ctx, tt)
+	resp.Body.Close()
+	assert.Error(t, err, tt)
+	assert.Equal(t, http.StatusConflict, resp.StatusCode, tt)
+}
+
+func testBadPathCreate(t *testing.T, tt model.ShortLink) {
+	_, resp, err := api.ApiPost(ctx, tt)
+	resp.Body.Close()
+	assert.Error(t, err, tt)
+	assert.Equal(t, http.StatusBadRequest, resp.StatusCode, tt)
+}
+
+func testCorrectDelete(t *testing.T, tt model.ShortLink) {
+	resp, err := api.ApiLinkIdDelete(ctx, tt.ShortPath)
+	resp.Body.Close()
+	assert.NoError(t, err, tt)
+	assert.Equal(t, http.StatusOK, resp.StatusCode, tt)
+}
+
+func testNotFoundDelete(t *testing.T, tt model.ShortLink) {
+	resp, err := api.ApiLinkIdDelete(ctx, tt.ShortPath)
+	resp.Body.Close()
+	assert.Error(t, err, tt)
+	assert.Equal(t, http.StatusNotFound, resp.StatusCode, tt)
+}
+
+func testCorrectGetAll(t *testing.T) []model.ShortLink {
+	sls, resp, err := api.ApiGet(ctx)
+	resp.Body.Close()
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Len(t, sls, 0)
-	resp.Body.Close()
+	return sls
 }
