@@ -19,7 +19,7 @@ The bit.ly like shortener.
 make run
 ```
 
-After that the documentation will be available <http://localhost:8080>
+After that the documentation will be available <http://localhost:80>
 
 ## Changes in api-spec
 
