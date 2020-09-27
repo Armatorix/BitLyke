@@ -34,7 +34,7 @@ make test-e2e
 
 * terraform code with GCP/Heroku deployment
 
-* simple frontend backend
+* simple frontend
 
 * authorization
 
