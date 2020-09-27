@@ -106,5 +106,7 @@ components:
       properties:
         short_path:
           type: string
+          pattern: "[a-zA-Z0-9]+"
         real_url:
           type: string
+          format: uri
