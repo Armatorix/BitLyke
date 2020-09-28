@@ -5,6 +5,7 @@ The bit.ly like shortener.
 - [Bitlyke](#bitlyke)
   - [Requirements](#requirements)
   - [How to run](#how-to-run)
+  - [Simple use case](#simple-use-case)
   - [Changes in api-spec](#changes-in-api-spec)
   - [Testing](#testing)
   - [Roadmap](#roadmap)
@@ -20,6 +21,12 @@ make run
 ```
 
 After that the documentation will be available <http://localhost:80>
+
+## Simple use case
+
+1. Create new shortener with POST request on `/api` endpoint
+
+2. Go to `/{short_path}` in the browser - it should redirect you to the real url that you provided.
 
 ## Changes in api-spec
 
