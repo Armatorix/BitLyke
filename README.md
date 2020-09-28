@@ -24,9 +24,9 @@ After that the documentation will be available <http://localhost:80>
 
 ## Simple use case
 
-1. Create new shortener with POST request on `/api` endpoint
+1. Create new shortener with POST request on `localhost:8080/api` endpoint
 
-2. Go to `/{short_path}` in the browser - it should redirect you to the real url that you provided.
+2. Go to `localhost:8080/{short_path}` in the browser - it should redirect you to the real url that you provided.
 
 ## Changes in api-spec
 
