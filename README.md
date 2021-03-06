@@ -1,5 +1,9 @@
 # Bitlyke
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/Armatorix/BitLyke)](https://goreportcard.com/report/github.com/Armatorix/BitLyke)
+[![CircleCI](https://circleci.com/gh/Armatorix/Bitlyke/tree/main.svg?style=shield)](https://app.circleci.com/pipelines/github/Armatorix/Bitlyke)
+[![codecov](https://codecov.io/gh/Armatorix/BitLyke/branch/master/graph/badge.svg?token=X4ZHMNY48I)](https://codecov.io/gh/Armatorix/BitLyke)
+
 The bit.ly like shortener.
 
 - [Bitlyke](#bitlyke)
@@ -16,7 +20,7 @@ The bit.ly like shortener.
 
 ## How to run
 
-``` bash
+```bash
 make run
 ```
 
@@ -32,7 +36,7 @@ After that the documentation will be available <http://localhost:80>
 
 After doing any chenges in api spec, the model rebuild should be done
 
-``` bash
+```bash
 make rebuild
 ```
 
@@ -40,7 +44,7 @@ make rebuild
 
 To run e2e tests
 
-``` bash
+```bash
 make test-e2e
 ```
 

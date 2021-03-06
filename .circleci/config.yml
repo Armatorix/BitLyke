@@ -1,0 +1,42 @@
+---
+version: 2.1
+
+executors:
+  go:
+    docker:
+      - image: circleci/golang:1.16
+  golangcilint:
+    docker:
+      - image: golangci/golangci-lint:v1.38.0
+
+jobs:
+  lint:
+    executor: golangcilint
+    steps:
+      - checkout
+      - run: make lint
+
+  build:
+    executor: go
+    steps:
+      - checkout
+      - run: make build
+
+  test:
+    executor: go
+    steps:
+      - checkout
+      - run:
+          name: Run tests and coverage
+          command: go test -race -coverprofile=coverage.txt -covermode=atomic ./...
+      - run:
+          name: Upload coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
+
+workflows:
+  version: 2
+  all_the_things:
+    jobs:
+      - lint
+      - build
+      - test

@@ -1,6 +1,6 @@
 module github.com/Armatorix/BitLyke
 
-go 1.15
+go 1.16
 
 require (
 	github.com/avast/retry-go v2.6.1+incompatible

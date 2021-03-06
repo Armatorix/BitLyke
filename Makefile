@@ -7,6 +7,10 @@ run:
 	${compose} up --build -d
 	bash ./scripts/wait_for_it.sh
 
+.PHONY: api
+build:
+	go build -o api ./cmd/bitlyke/main.go
+
 .PHONY: run-db-only
 run-db-only:
 	${compose} up -d postgres
@@ -51,7 +55,7 @@ model-clean:
 		.travis.yml \
 		.openapi-generator-ignore
 
-.PHONY: linter
+.PHONY: lint
 lint:
 	golangci-lint run
 
