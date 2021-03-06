@@ -73,5 +73,6 @@ test-e2e:
 test:
 	go test -short --count=1 ./...
 
+.PHONY: openapi-spec-validate
 openapi-spec-validate:
 	swagger-cli validate ${OPENAPI_PATH}
