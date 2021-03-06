@@ -63,11 +63,13 @@ lint:
 format:
 	goimports -w ./..
 
+.PHONY: test-e2e
 test-e2e: 
 	$(MAKE) run
 	go test --count=1 ./test/e2e
 	$(MAKE) stop
 
+.PHONY: test
 test:
 	go test -short --count=1 ./...
 
