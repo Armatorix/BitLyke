@@ -71,7 +71,7 @@ test-e2e:
 
 .PHONY: test
 test:
-	go test -short --count=1 ./...
+	go test -short -race  -covermode=atomic ./...
 
 .PHONY: openapi-spec-validate
 openapi-spec-validate:
