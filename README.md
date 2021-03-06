@@ -1,7 +1,7 @@
 # Bitlyke
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/Armatorix/BitLyke)](https://goreportcard.com/report/github.com/Armatorix/BitLyke)
-[![CircleCI](https://circleci.com/gh/Armatorix/Bitlyke/tree/main.svg?style=shield)](https://app.circleci.com/pipelines/github/Armatorix/Bitlyke)
+[![CircleCI](https://circleci.com/gh/Armatorix/Bitlyke/tree/main.svg?style=shield)](https://app.circleci.com/pipelines/github/Armatorix/BitLyke)
 [![codecov](https://codecov.io/gh/Armatorix/BitLyke/branch/master/graph/badge.svg?token=X4ZHMNY48I)](https://codecov.io/gh/Armatorix/BitLyke)
 
 The bit.ly like shortener.
