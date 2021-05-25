@@ -16,7 +16,7 @@ The bit.ly like shortener.
 
 ## Requirements
 
-- docker-compose (v1.14.0+ - with compose file v3.3 support)
+- docker-compose>=v1.14.0 ( with compose file v3.3 support)
 
 ## How to run
 
