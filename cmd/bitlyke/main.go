@@ -22,7 +22,7 @@ func (cv *V) Validate(i interface{}) error {
 func main() {
 	cfg, err := config.FromEnv()
 	if err != nil {
-		log.Fatalf("failed env init: %v", err)
+		log.Fatalf("failed env 
 	}
 
 	db, err := pg.New(cfg.Postgres)
