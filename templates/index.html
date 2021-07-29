@@ -68,6 +68,18 @@
     <main>
         <div class="container">
             <h1>Links</h1>
+            <form onsubmit="formCtrl()">
+                <div class="form-group">
+                  <label for="shorten">Shorten</label>
+                  <input type="text"  pattern="[A-Za-z0-9]+" class="form-control" id="form-shorten" placeholder="Put alphanumeric shorten path">
+                </div>
+                <div class="form-group">
+                  <label for="real">RealURL</label>
+                  <input type="url" class="form-control" id="form-real" placeholder="RealURL">
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+
             <table class="table table-dark">
                 <thead>
                     <tr>
@@ -76,18 +88,7 @@
                         <th scope="col">link</th>
                         <th scope="col"></th>
                     </tr>
-                </thead>
-                <form onsubmit="formCtrl()">
-                    <div class="form-group">
-                      <label for="shorten">Shorten</label>
-                      <input type="text"  pattern="[A-Za-z0-9]+" class="form-control" id="form-shorten" placeholder="Put alphanumeric shorten path">
-                    </div>
-                    <div class="form-group">
-                      <label for="real">RealURL</label>
-                      <input type="url" class="form-control" id="form-real" placeholder="RealURL">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
+                </thead>                
                 <tbody>
                     {{ range $i, $sl := .Links }}
                     <tr>
