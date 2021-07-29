@@ -30,6 +30,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed connection test: %v", err)
 	}
+	if err := db.InitModels(); err != nil {
+		log.Fatalf("failed model inits %v", err)
+	}
 
 	e := echo.New()
 

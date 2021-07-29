@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/Armatorix/BitLyke/pkg/model"
 	"github.com/Armatorix/BitLyke/pkg/pg"
+	"github.com/Armatorix/BitLyke/pkg/schema"
 	"github.com/labstack/echo/v4"
 )
 
@@ -48,9 +48,9 @@ func (h *Handler) CreateShort(c echo.Context) error {
 	if err := c.Validate(req); err != nil {
 		return c.NoContent(http.StatusBadRequest)
 	}
-	ls, err := h.db.InsertShort(&model.ShortLink{
+	ls, err := h.db.InsertShort(&schema.ShortLink{
 		ShortPath: req.ShortPath,
-		RealUrl:   req.RealURL,
+		RealURL:   req.RealURL,
 	})
 	if err != nil {
 		if errors.Is(err, pg.ErrDuplicatedEntry) {
@@ -80,7 +80,7 @@ func (h *Handler) GetShort(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 	h.incOccurance(req.Link)
-	return c.Redirect(http.StatusTemporaryRedirect, l.RealUrl)
+	return c.Redirect(http.StatusTemporaryRedirect, l.RealURL)
 }
 
 type deleteShortedRequest struct {

@@ -4,8 +4,10 @@ import (
 	"log"
 
 	"github.com/Armatorix/BitLyke/pkg/config"
+	"github.com/Armatorix/BitLyke/pkg/schema"
 	"github.com/avast/retry-go"
 	"github.com/go-pg/pg/v10"
+	"github.com/go-pg/pg/v10/orm"
 	"github.com/pkg/errors"
 )
 
@@ -24,6 +26,12 @@ func New(cfg config.PostgresConfig) (*DB, error) {
 		return nil, err
 	}
 	return db, nil
+}
+
+func (db *DB) InitModels() error {
+	return db.Model(&schema.ShortLink{}).CreateTable(&orm.CreateTableOptions{
+		IfNotExists: true,
+	})
 }
 
 func (db *DB) TestRequest() error {

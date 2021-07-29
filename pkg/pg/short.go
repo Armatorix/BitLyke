@@ -1,7 +1,7 @@
 package pg
 
 import (
-	"github.com/Armatorix/BitLyke/pkg/model"
+	"github.com/Armatorix/BitLyke/pkg/schema"
 	"github.com/go-pg/pg/v10"
 	"github.com/pkg/errors"
 )
@@ -16,7 +16,7 @@ func isDuplicatedKeyErr(err error) bool {
 	return !ok || pgerr.IntegrityViolation()
 }
 
-func (db *DB) InsertShort(l *model.ShortLink) (*model.ShortLink, error) {
+func (db *DB) InsertShort(l *schema.ShortLink) (*schema.ShortLink, error) {
 	_, err := db.Model(l).Insert()
 	if err != nil {
 		if isDuplicatedKeyErr(err) {
@@ -27,8 +27,8 @@ func (db *DB) InsertShort(l *model.ShortLink) (*model.ShortLink, error) {
 	return l, nil
 }
 
-func (db *DB) GetDestinationLink(short string) (*model.ShortLink, error) {
-	l := &model.ShortLink{
+func (db *DB) GetDestinationLink(short string) (*schema.ShortLink, error) {
+	l := &schema.ShortLink{
 		ShortPath: short,
 	}
 	err := db.Model(l).Where("short_path = ?", l.ShortPath).Select()
@@ -41,8 +41,8 @@ func (db *DB) GetDestinationLink(short string) (*model.ShortLink, error) {
 	return l, nil
 }
 
-func (db *DB) GetLinkShorts() ([]model.ShortLink, error) {
-	ls := []model.ShortLink{}
+func (db *DB) GetLinkShorts() ([]schema.ShortLink, error) {
+	ls := []schema.ShortLink{}
 	err := db.Model(&ls).Select()
 	if err != nil {
 		return nil, err
@@ -51,7 +51,7 @@ func (db *DB) GetLinkShorts() ([]model.ShortLink, error) {
 }
 
 func (db *DB) DeleteShort(short string) error {
-	res, err := db.Model((*model.ShortLink)(nil)).Where("\"short_path\" = ?", short).Delete()
+	res, err := db.Model((*schema.ShortLink)(nil)).Where("\"short_path\" = ?", short).Delete()
 	if err != nil {
 		return errors.Wrap(err, "unexpected select failure")
 	}
