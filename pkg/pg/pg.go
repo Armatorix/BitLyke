@@ -1,7 +1,7 @@
 package pg
 
 import (
-	"strings"
+	"log"
 
 	"github.com/Armatorix/BitLyke/pkg/config"
 	"github.com/avast/retry-go"
@@ -9,20 +9,8 @@ import (
 	"github.com/pkg/errors"
 )
 
-const (
-	unix = "unix"
-	tcp  = "tcp"
-)
-
 type DB struct {
 	*pg.DB
-}
-
-func getNetwork(addr string) string {
-	if strings.Contains(addr, "/") {
-		return unix
-	}
-	return tcp
 }
 
 func New(cfg config.PostgresConfig) (*DB, error) {
@@ -43,9 +31,11 @@ func (db *DB) TestRequest() error {
 	var num int
 	_, err := db.Query(pg.Scan(&num), "SELECT ?", testNum)
 	if err != nil {
+		log.Println("failed test", err)
 		return errors.Wrap(err, "connection check failed")
 	}
 	if num != testNum {
+		log.Println("bad respond", num)
 		return errors.Wrap(err, "connection check failed: different value")
 	}
 	return nil

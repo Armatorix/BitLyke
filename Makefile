@@ -4,7 +4,7 @@ compose = docker-compose  --project-name bitlyke -f docker/docker-compose.yml
 
 .PHONY: run
 run:
-	${compose} up --build -d
+	${compose} up --build -d --always-recreate-deps --renew-anon-volumes
 	bash ./scripts/wait_for_it.sh
 
 .PHONY: api

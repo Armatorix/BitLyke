@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/Armatorix/BitLyke/pkg/config"
@@ -47,5 +48,5 @@ func main() {
 	api.DELETE("/:link", h.DeleteShort)
 	e.GET("/:link", h.GetShort)
 
-	e.Logger.Fatal(e.Start(cfg.Server.Address).Error())
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", cfg.Server.Port)).Error())
 }

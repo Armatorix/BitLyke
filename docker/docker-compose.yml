@@ -7,7 +7,6 @@ services:
       - "5432:5432"
     restart: always
     env_file: ../configs/env.local.pg
-    network_mode: host
     volumes:
       - ../database/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
@@ -18,7 +17,6 @@ services:
     env_file: ../configs/env.local.api
     ports:
       - "8080:8080"
-    network_mode: host
     depends_on:
       - postgres
 
