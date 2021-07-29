@@ -43,16 +43,30 @@
             navigator.clipboard.writeText(txt);
         }
         copyShort = (txt) => {
-            copy(window.location.href+txt);
+            copy(window.location.origin+"/" + txt);
+        }
+        formCtrl = () => {
+            fetch("/api", {
+                method : "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body : JSON.stringify({
+                    short_path : document.getElementById('form-shorten').value,
+                    real_url : document.getElementById('form-real').value,
+                })
+            }).then(
+                response => response.text()
+            ).then(
+                html => console.log(html)
+            );
         }
     </script>
 </head>
 
 <body class="py-4">
-
     <main>
         <div class="container">
-
             <h1>Links</h1>
             <table class="table table-dark">
                 <thead>
@@ -63,12 +77,23 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
+                <form onsubmit="formCtrl()">
+                    <div class="form-group">
+                      <label for="shorten">Shorten</label>
+                      <input type="text"  pattern="[A-Za-z0-9]+" class="form-control" id="form-shorten" placeholder="Put alphanumeric shorten path">
+                    </div>
+                    <div class="form-group">
+                      <label for="real">RealURL</label>
+                      <input type="url" class="form-control" id="form-real" placeholder="RealURL">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
                 <tbody>
                     {{ range $i, $sl := .Links }}
                     <tr>
                         <th scope="row">{{ $i }}</th>
-                        <td> <button class="btn btn-info"    onclick="copyShort('{{ $sl.ShortPath}}')">{{ $sl.ShortPath }}</button></td>
-                        <td> <button class="btn btn-success" onclick="copy('{{ $sl.RealURL }}')">{{ $sl.RealURL }}</button></td>
+                        <td><button class="btn btn-info" onclick="copyShort('{{ $sl.ShortPath}}')">{{ $sl.ShortPath }}</button></td>
+                        <td><button class="btn btn-success" onclick="copy('{{ $sl.RealURL }}')">{{ $sl.RealURL }}</button></td>
                         <td>
                             <button type="button" class="btn btn-primary" width="16" height="16"
                                 onclick="location.href='{{ $sl.RealURL }}';">
