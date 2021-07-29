@@ -12,10 +12,7 @@ type ServerConfig struct {
 }
 
 type PostgresConfig struct {
-	Address  string `env:"PSQL_ADDRESS"`
-	Database string `env:"PSQL_DATABASE"`
-	User     string `env:"PSQL_USER"`
-	Password string `env:"PSQL_PASSWORD"`
+	URI string `env:"DATABASE"`
 }
 
 type Config struct {
@@ -29,10 +26,7 @@ func New() *Config {
 			Address: ":8080",
 		},
 		Postgres: PostgresConfig{
-			Address:  "localhost:5432",
-			Database: "bitlyke",
-			User:     "postgres",
-			Password: "example",
+			URI: "postgres://postgres:example@localhost:5432/bitlyke",
 		},
 	}
 }

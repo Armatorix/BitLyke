@@ -2,7 +2,7 @@ package pg
 
 import (
 	"github.com/Armatorix/BitLyke/pkg/model"
-	"github.com/go-pg/pg/v9"
+	"github.com/go-pg/pg/v10"
 	"github.com/pkg/errors"
 )
 
@@ -17,7 +17,8 @@ func isDuplicatedKeyErr(err error) bool {
 }
 
 func (db *DB) InsertShort(l *model.ShortLink) (*model.ShortLink, error) {
-	if err := db.Insert(l); err != nil {
+	_, err := db.Model(l).Insert()
+	if err != nil {
 		if isDuplicatedKeyErr(err) {
 			return nil, ErrDuplicatedEntry
 		}

@@ -5,7 +5,7 @@ import (
 
 	"github.com/Armatorix/BitLyke/pkg/config"
 	"github.com/avast/retry-go"
-	"github.com/go-pg/pg/v9"
+	"github.com/go-pg/pg/v10"
 	"github.com/pkg/errors"
 )
 
@@ -26,16 +26,12 @@ func getNetwork(addr string) string {
 }
 
 func New(cfg config.PostgresConfig) (*DB, error) {
-	db := &DB{
-		pg.Connect(&pg.Options{
-			Network:  getNetwork(cfg.Address),
-			Addr:     cfg.Address,
-			User:     cfg.User,
-			Password: cfg.Password,
-			Database: cfg.Database,
-		})}
-
-	err := retry.Do(db.TestRequest)
+	opts, err := pg.ParseURL(cfg.URI)
+	if err != nil {
+		return nil, err
+	}
+	db := &DB{pg.Connect(opts)}
+	err = retry.Do(db.TestRequest)
 	if err != nil {
 		return nil, err
 	}
