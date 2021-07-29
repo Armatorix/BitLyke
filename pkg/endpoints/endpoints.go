@@ -17,7 +17,10 @@ type Handler struct {
 }
 
 func NewHandler(db *pg.DB) *Handler {
-	return &Handler{db: db, counter: make(map[string]int64)}
+	return &Handler{
+		db:      db,
+		counter: make(map[string]int64),
+	}
 }
 
 var statusOK = map[string]string{"status": "ok"}
@@ -33,6 +36,17 @@ func (h *Handler) GetAllShorts(c echo.Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, ls)
+}
+
+func (h *Handler) Mainpage(c echo.Context) error {
+	ls, err := h.db.GetLinkShorts()
+	if err != nil {
+		return err
+	}
+
+	return c.Render(http.StatusOK, "index.html", schema.MainPage{
+		Links: ls,
+	})
 }
 
 type postShortRequest struct {

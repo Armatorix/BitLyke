@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 
 	"github.com/Armatorix/BitLyke/pkg/config"
 	"github.com/Armatorix/BitLyke/pkg/endpoints"
 	"github.com/Armatorix/BitLyke/pkg/pg"
+	"github.com/Armatorix/BitLyke/renderer"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -35,6 +37,7 @@ func main() {
 	}
 
 	e := echo.New()
+	e.Renderer = renderer.New(template.Must(template.ParseFiles("templates/index.html")))
 
 	e.Use(middleware.Logger())
 	e.Logger.SetLevel(cfg.Server.LogLevel)
@@ -43,6 +46,8 @@ func main() {
 	e.GET("/public/health-check", endpoints.Healthcheck)
 
 	h := endpoints.NewHandler(db)
+	e.GET("/", h.Mainpage)
+	e.GET("/index.html", h.Mainpage)
 	e.GET("/counts", h.GetCounts)
 
 	api := e.Group("/api")
