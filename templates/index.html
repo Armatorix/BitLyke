@@ -37,6 +37,13 @@
                 font-size: 3.5rem;
             }
         }
+
+        .too-long {
+            min-width: 10em;
+            max-width: 20em;
+            overflow: auto;
+        }
+
     </style>
     <script>
         copy = (txt) => {
@@ -89,7 +96,7 @@
                   <label for="real">RealURL</label>
                   <input type="url" class="form-control" id="form-real" placeholder="RealURL">
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
             </form>
 
             <table class="table table-dark">
@@ -105,8 +112,8 @@
                     {{ range $i, $sl := .Links }}
                     <tr>
                         <th scope="row">{{ $i }}</th>
-                        <td><button class="btn btn-info" onclick="copyShort('{{ $sl.ShortPath}}')">{{ $sl.ShortPath }}</button></td>
-                        <td><button class="btn btn-success" onclick="copy('{{ $sl.RealURL }}')">{{ $sl.RealURL }}</button></td>
+                        <td><button class="btn btn-info too-long" onclick="copyShort('{{ $sl.ShortPath}}')">{{ $sl.ShortPath }}</button></td>
+                        <td><button class="btn btn-success too-long" onclick="copy('{{ $sl.RealURL }}')">{{ $sl.RealURL }}</button></td>
                         <td>
                             <button type="button" class="btn btn-primary" width="16" height="16"
                                 onclick="deleteShort('{{ $sl.ShortPath }}')">
