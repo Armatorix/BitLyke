@@ -9,6 +9,7 @@
     <title>BitLyke - bit.ly like url shortener</title>
 
     <link rel="stylesheet" href="https://bootswatch.com/3/cyborg/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -17,70 +18,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-        
-        <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .too-long {
-            min-width: 10em;
-            max-width: 20em;
-            overflow: auto;
-        }
-
-    </style>
-    <script>
-        copy = (txt) => {
-            navigator.clipboard.writeText(txt);
-        }
-        copyShort = (txt) => {
-            copy(window.location.origin+"/" + txt);
-        }
-        formCtrl = () => {
-            fetch("/api", {
-                method : "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body : JSON.stringify({
-                    short_path : document.getElementById('form-shorten').value,
-                    real_url : document.getElementById('form-real').value,
-                })
-            }).then(
-                response => response.text()
-            ).then((html) => {
-                console.log(html);
-                window.location.reload();
-            }
-            );
-        }
-        deleteShort = (short) => {
-            fetch(`/api/${short}`, {
-                method : "DELETE",
-            }).then(
-                response => response.text()
-            ).then(html=>{
-                html => console.log(html);
-                window.location.reload();
-            });
-        }
-    </script>
+        crossorigin="anonymous"></script>>
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+    <script src="/assets/js/main.js"></script>
 </head>
 
 <body class="py-4">
     <main>
+        <button id="btn-login" disabled="true" onclick="login()">Log in</button>
         <div class="container">
             <h1>Links</h1>
             <form onsubmit="formCtrl()">

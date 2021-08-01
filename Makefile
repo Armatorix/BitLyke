@@ -2,14 +2,14 @@ OPENAPI_PATH=./api/openapi-spec/api.yaml
 GENERATE_PATH=./pkg/model
 compose = docker-compose  --project-name bitlyke -f docker/docker-compose.yml
 
+.PHONY: apidev
+apidev:
+	reflex -v -s go run ./cmd/bitlyke/main.go
+
 .PHONY: run
 run:
 	${compose} up --build -d --always-recreate-deps --renew-anon-volumes
 	bash ./scripts/wait_for_it.sh
-
-.PHONY: api
-build:
-	go build -o api ./cmd/bitlyke/main.go
 
 .PHONY: run-db-only
 run-db-only:
