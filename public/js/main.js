@@ -27,8 +27,11 @@ deleteShort = (short) => {
         method: "DELETE",
     }).then(
         response => response.text()
-    ).then(html => {
-        html => console.log(html);
+    ).then(resp => {
+        console.log(resp);
         window.location.reload();
     });
 }
+$(function () {
+    $('[data-toggle="popover"]').popover()
+});

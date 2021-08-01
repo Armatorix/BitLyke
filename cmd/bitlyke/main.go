@@ -55,6 +55,9 @@ func main() {
 	api.POST("", h.CreateShort)
 	api.DELETE("/:link", h.DeleteShort)
 	e.GET("/:link", h.GetShort)
+
 	e.Static("/assets", "public")
+	e.File("/auth_config.json", "./auth_config.json")
+
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", cfg.Server.Port)).Error())
 }
