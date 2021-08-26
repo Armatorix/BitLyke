@@ -5,6 +5,7 @@
 [![codecov](https://codecov.io/gh/Armatorix/BitLyke/branch/master/graph/badge.svg?token=X4ZHMNY48I)](https://codecov.io/gh/Armatorix/BitLyke)
 
 The bit.ly like shortener.
+Hosted on Heroku: https://bitlyke.herokuapp.com/
 
 - [Bitlyke](#bitlyke)
   - [Requirements](#requirements)
